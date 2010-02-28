@@ -64,6 +64,5 @@
 			?>
 		</div>
 	</div>
-	<?php echo $cakeDebug?>
 </body>
 </html>
