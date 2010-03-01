@@ -81,6 +81,15 @@ class AclPermissionsController extends AclAppController {
 		}
 		exit;
 	}
+
+	function crud() {
+		if (isset($this->data)) {
+			if ($this->AclAroAco->save($this->data)) {
+				exit;
+			}
+		}
+		$this->failure();
+	}
 }
 
 ?>

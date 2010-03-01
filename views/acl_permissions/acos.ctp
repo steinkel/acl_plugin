@@ -5,6 +5,7 @@
       <?php print $html->image('/acl/img/tango/16x16/actions/edit-undo.png', 
 		array('class' => 'acl_permission_link')) ?>
       <?php print $k ?>
+			<?php echo $this->element('crud',array('aro_aco'=>$n['AclAroAco'])); ?>
     </div>
 <?php } ?>
 </div>

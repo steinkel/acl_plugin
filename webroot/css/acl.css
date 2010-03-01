@@ -38,6 +38,15 @@ div.acl_menu {
   padding: 5px;
   margin: 5px;
 }
+
+.acl_permission_item label {
+	float: right;
+}
+
+.acl_permission_item input {
+	float: right;
+}
+
 .acl_permission_link {
   cursor: pointer;
   float: right;

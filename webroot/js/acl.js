@@ -282,14 +282,31 @@ function acl_permission_link() {
 	});
 }
 function acl_permission_revoke(id) {
+	if (confirm("You sure you want to revoke this ACL?")) {
+		$.ajax({
+			url: acl_base_url + '/aclPermissions/revoke/' + id,
+			success: function(data,statusText) {
+				acl_aro_permission_refresh();
+				acl_aco_permission_refresh();
+			}
+		});
+	}
+}
+
+function acl_permission_crud_update(el) {
+	var id = $(el).parents('.acl_permission_item').attr('aro_aco');
+	var crud = 'data[AclAroAco][' + $(el).attr('name').substring(4) + ']';
+	var checked = $(el).attr('checked') ? '1' : '0';
+	var h = { 'data[AclAroAco][id]': id };
+	h[crud] = checked;
 	$.ajax({
-		url: acl_base_url + '/aclPermissions/revoke/' + id,
+		url: acl_base_url + '/aclPermissions/crud',
+		data: h,
+		type: 'POST',
 		success: function(data,statusText) {
-			acl_aro_permission_refresh();
-			acl_aco_permission_refresh();
 		}
 	});
-}
+}	
 
 function acl_permission_setup() {
 	$('#aro_editor_parentId').click(acl_aro_permission_refresh).dblclick(function(id) {
@@ -299,9 +316,12 @@ function acl_permission_setup() {
 	 acl_aco_editor_children($(this).attr('value'));
 	});
 	$('#acl_link_button').click(acl_permission_link);
-	$('.acl_permission_item').live('click',function() {
-		var aro_aco_id = $(this).attr('aro_aco');
+	$('.acl_permission_link').live('click',function() {
+		var aro_aco_id = $(this).parent().attr('aro_aco');
 		acl_permission_revoke(aro_aco_id);
+	});
+	$('.acl_permission_item input[type=checkbox]').live('change',function() {
+		acl_permission_crud_update(this);
 	});
 	acl_aro_editor_reload();
 	acl_aco_editor_reload();
