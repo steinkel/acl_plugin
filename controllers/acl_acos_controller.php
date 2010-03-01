@@ -21,7 +21,7 @@ class AclAcosController extends AclAppController {
 	}
 
 	function delete($id) {
-		if (!$this->AclAco->del($id)) {
+		if (!$this->AclAco->delete($id)) {
 			$this->failure();
 		}
 		exit;

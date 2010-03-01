@@ -1,50 +1,3 @@
-<?php print $javascript->link('/acl/js/prototype') ?>
-<script>
-/* ACO  */
-function acl_aco_editor_children(id) {
-	new Ajax.Updater({success:'aco_editor_id'}, '<?php print $html->url('/acl/aclAcos/children/') ?>' + id, {method:'get'});
-}
-function acl_aco_editor_reload() {
-	new Ajax.Updater('aco_editor_id', '<?php print $html->url('/acl/aclAcos/children', true) ?>');
-}
-function acl_aco_permission_refresh() {
-	aco_id = document.getElementById('aco_editor_id').value;
-	new Ajax.Updater('aco_permissions', '<?php print $html->url('/acl/aclPermissions/acos/', true) ?>' + aco_id);
-}
-/* ARO */
-function acl_aro_editor_children(id) {
-	new Ajax.Updater({success:'aro_editor_id'}, '<?php print $html->url('/acl/aclAros/children/') ?>' + id, {method:'get'});
-}
-function acl_aro_editor_reload() {
-	new Ajax.Updater('aro_editor_id', '<?php print $html->url('/acl/aclAros/children', true) ?>');
-}
-function acl_aro_permission_refresh() {
-	aro_id = document.getElementById('aro_editor_id').value;
-	new Ajax.Updater('aro_permissions', '<?php print $html->url('/acl/aclPermissions/aros/', true) ?>' + aro_id);
-}
-/* PERMISSION */
-function acl_permission_link() {
-	aro_id = document.getElementById('aro_editor_id').value;
-	aco_id = document.getElementById('aco_editor_id').value;
-	h = new Hash({'data[AclAroAco][aro_id]':aro_id, 'data[AclAroAco][aco_id]':aco_id});
-	new Ajax.Request('<?php print $html->url('/acl/aclPermissions/create') ?>', {parameters:h});
-	acl_aro_permission_refresh();
-	acl_aco_permission_refresh();
-}
-function acl_permission_revoke(id) {
-	new Ajax.Request('<?php print $html->url('/acl/aclPermissions/revoke/') ?>' + id, {onSuccess:
-	function () {
-		acl_aro_permission_refresh();
-		acl_aco_permission_refresh();
-	}});
-}
-
-function setup() {
-	acl_aro_editor_reload();
-	acl_aco_editor_reload();
-}
-setup();
-</script>
 <?php print $this->element('acl_menu') ?>
 <div>
   <?php print $html->image('/acl/img/tango/32x32/emblems/emblem-readonly.png', array('align' => 'absmiddle')) ?>
@@ -81,14 +34,14 @@ revoke.</p>
   </thead>
   <tr>
     <td>
-      <select id="aro_editor_id" class="acl_select" size="10" onChange="acl_aro_permission_refresh()" ondblclick="acl_aro_editor_children(this.value)">
+      <select id="aro_editor_parentId" class="acl_select" size="10">
 		<option>Empty</option>
       </select><br />
     </td>
     <td width="80">
-      <?php print $html->image('/acl/img/tango/32x32/actions/edit-redo.png', array('onClick' => 'acl_permission_link()', 'class' => 'acl_button')) ?>
+      <?php print $html->image('/acl/img/tango/32x32/actions/edit-redo.png', array( 'id'=>'acl_link_button','class' => 'acl_button')) ?>
     <td>
-      <select id="aco_editor_id" class="acl_select" size="10" onChange="acl_aco_permission_refresh()" ondblclick="acl_aco_editor_children(this.value)">
+      <select id="aco_editor_parentId" class="acl_select" size="10">
 		<option>Empty</option>
       </select><br />
     </td>
@@ -104,3 +57,8 @@ revoke.</p>
     </td>
   </tr>
 </table>
+<script type="text/javascript">
+$(document).ready(function() {
+	acl_permission_setup();
+});
+</script>

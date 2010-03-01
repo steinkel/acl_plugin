@@ -21,7 +21,7 @@ class AclArosController extends AclAppController {
 	}
 
 	function delete($id) {
-		if (!$this->AclAro->del($id)) {
+		if (!$this->AclAro->delete($id)) {
 			$this->failure();
 		}
 		exit;

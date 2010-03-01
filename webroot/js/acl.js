@@ -245,3 +245,65 @@ function acl_aco_setup() {
 	acl_aco_editor_reload();
 }
 
+/* Permissions */
+function acl_aco_permission_refresh() {
+	var aco_id = $('#aco_editor_parentId').attr('value');
+	$.ajax({
+		url: acl_base_url + '/aclPermissions/acos/' + aco_id,
+		dataType: 'html',
+		success: function(data,statusText) {
+			$('#aco_permissions').html(data);
+		}
+	});
+}
+function acl_aro_permission_refresh() {
+	var aro_id = $('#aro_editor_parentId').attr('value');
+	$.ajax({
+		url: acl_base_url + '/aclPermissions/aros/' + aro_id,
+		dataType: 'html',
+		success: function(data,statusText) {
+			$('#aro_permissions').html(data);
+		}
+	});
+}
+/* PERMISSION */
+function acl_permission_link() {
+	var aro_id = $('#aro_editor_parentId').attr('value');
+	var aco_id = $('#aco_editor_parentId').attr('value');
+	var h = {'data[AclAroAco][aro_id]':aro_id, 'data[AclAroAco][aco_id]':aco_id};
+	$.ajax({
+		url: acl_base_url + '/aclPermissions/create',
+		data: h,
+		type: 'POST',
+		success: function(data,statusText) {
+			acl_aro_permission_refresh();
+			acl_aco_permission_refresh();
+		}
+	});
+}
+function acl_permission_revoke(id) {
+	$.ajax({
+		url: acl_base_url + '/aclPermissions/revoke/' + id,
+		success: function(data,statusText) {
+			acl_aro_permission_refresh();
+			acl_aco_permission_refresh();
+		}
+	});
+}
+
+function acl_permission_setup() {
+	$('#aro_editor_parentId').click(acl_aro_permission_refresh).dblclick(function(id) {
+	 acl_aro_editor_children($(this).attr('value'));
+	});
+	$('#aco_editor_parentId').click(acl_aco_permission_refresh).dblclick(function(id) {
+	 acl_aco_editor_children($(this).attr('value'));
+	});
+	$('#acl_link_button').click(acl_permission_link);
+	$('.acl_permission_item').live('click',function() {
+		var aro_aco_id = $(this).attr('aro_aco');
+		acl_permission_revoke(aro_aco_id);
+	});
+	acl_aro_editor_reload();
+	acl_aco_editor_reload();
+}
+

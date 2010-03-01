@@ -76,7 +76,7 @@ class AclPermissionsController extends AclAppController {
 	}
 
 	function revoke($id) {
-		if (!$this->AclAroAco->del($id)) {
+		if (!$this->AclAroAco->delete($id)) {
 			$this->failure();
 		}
 		exit;
