@@ -1,3 +1,4 @@
+<?php print $this->element('acl_scripts') ?>
 <h2>Access Control List Management</h2>
 <ul class="acl">
   <li><?php print $html->image('/acl/img/tango/32x32/apps/system-users.png') ?><?php print $html->link('Manage Aros', '/admin/acl/aros') ?></li>

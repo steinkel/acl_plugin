@@ -1,3 +1,4 @@
+<?php print $this->element('acl_scripts') ?>
 <?php print $this->element('acl_menu') ?>
 <div>
   <?php print $html->image('/acl/img/tango/32x32/apps/preferences-system-windows.png', array('align' => 'absmiddle')) ?>

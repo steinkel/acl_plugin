@@ -37,12 +37,8 @@
 	<link rel="icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="<?php echo $this->webroot;?>favicon.ico" type="image/x-icon" />
 	<?php echo $html->css('cake.generic');?>
-	<?php echo $html->css('/acl/css/acl');?>
-	<?php echo $html->script(array('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js','/acl/js/acl')); ?>
+	<?php echo $html->script(array('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js')); ?>
 	<?php echo $scripts_for_layout;?>
-	<script type="text/javascript">
-	acl_base_url = '<?php echo $html->url('/acl',true); ?>';
-	</script>
 </head>
 <body>
 	<div id="container">
@@ -63,7 +59,7 @@
 			<?php echo $html->link(
 							$html->image('cake.power.gif', array('alt'=> __("CakePHP: the rapid development php framework", true), 'border'=>"0")),
 							'http://www.cakephp.org/',
-							array('target'=>'_new'), null, false
+							array('target'=>'_new', 'escape' => false)
 						);
 			?>
 		</div>

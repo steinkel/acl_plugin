@@ -1,3 +1,4 @@
+<?php print $this->element('acl_scripts') ?>
 <?php print $this->element('acl_menu') ?>
 <div>
   <?php print $html->image('/acl/img/tango/32x32/emblems/emblem-readonly.png', array('align' => 'absmiddle')) ?>

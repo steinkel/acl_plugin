@@ -1,5 +1,4 @@
-<script>
-</script>
+<?php print $this->element('acl_scripts') ?>
 <?php print $this->element('acl_menu') ?>
 <div>
   <?php print $html->image('/acl/img/tango/32x32/apps/system-users.png', array('align' => 'absmiddle')) ?>
